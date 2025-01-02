@@ -1,5 +1,4 @@
 
-//https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
 
 const container = document.querySelector('.container');
 const search = document.querySelector('.search-box button');
@@ -8,34 +7,36 @@ const weatherdetails = document.querySelector('.weather-details');
 const error404 = document.querySelector('.not-found');
 
 search.addEventListener('click', () => {
-  const APIkey = 'your-new-api-key'; // Replace 'your-new-api-key' with your actual new key
+  const APIkey = '394ffbca71ef42a4457b8b6f8fa9656b'; 
   const city = document.querySelector('.search-box input').value;
 
-  if (city.trim() === "") return;
+  if (city == ' ') return;
 
-  fetch(`https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude=minutely,hourly,daily&appid=${APIkey}`)
+  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${APIkey}`)
     .then(response => response.json())
     .then(json => {
+
       if (json.cod === '404') {
         container.style.height = '400px';
         weatherbox.classList.remove('active');
         weatherdetails.classList.remove('active');
-        error404.style.display = 'block';
+        error404.classList.add ('active');
         return;
       }
 
       container.style.height = '550px';
       weatherbox.classList.add('active');
       weatherdetails.classList.add('active');
-      error404.style.display = 'none';
+      error404.classList.remove ('active');
+
 
       const image = document.querySelector('.weather-box img');
-      const temperature = document.querySelector('.weather-box .temperature');
-      const description = document.querySelector('.weather-box .description');
-      const humidity = document.querySelector('.weather-details .humidity span');
-      const wind = document.querySelector('.weather-details .wind span');
+      const temperature = document.querySelector('.weather-box  .temperature');
+      const description = document.querySelector('.weather-box   .description');
+      const humidity = document.querySelector('.weather-details   .humidity  span');
+      const wind = document.querySelector('.weather-details  .wind  span');
 
-      switch (json.current.weather[0].main) {
+      switch (json.weather[0].main) {
         case 'Clear':
           image.src = './weatherpics/clear-01.png';
           break;
@@ -62,9 +63,7 @@ search.addEventListener('click', () => {
       temperature.innerHTML = `${parseInt(json.current.temp)}<span>°C</span>`;
       description.innerHTML = `${json.current.weather[0].description}`;
       humidity.innerHTML = `${json.current.humidity}%`;
-      wind.innerHTML = `${parseInt(json.current.wind_speed)} KMH`;
+      wind.innerHTML = `${parseInt(json.current.wind.speed)} KMH`;
     })
-    .catch(() => {
-      alert('Unable to fetch weather data. Please try again later.');
-    });
+    
 });
