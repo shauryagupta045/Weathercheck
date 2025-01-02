@@ -60,10 +60,10 @@ search.addEventListener('click', () => {
           image.src = './weatherpics/storm-01.png';
       }
 
-      temperature.innerHTML = `${parseInt(json.current.temp)}<span>°C</span>`;
-      description.innerHTML = `${json.current.weather[0].description}`;
-      humidity.innerHTML = `${json.current.humidity}%`;
-      wind.innerHTML = `${parseInt(json.current.wind.speed)} KMH`;
+      temperature.innerHTML = `${parseInt(json.main.temp)}<span>°C</span>`;
+      description.innerHTML = `${json.weather[0].description}`;
+      humidity.innerHTML = `${json.main.humidity}%`;
+      wind.innerHTML = `${parseInt(json.wind.speed)} KMH`;
     })
     
 });
